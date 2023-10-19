@@ -66,10 +66,11 @@ const confirmBooking = async (bookingId: string): Promise<Booking | null> => {
 };
 
 const cancelBooking = async (bookingId: string) => {
-  await prisma.booking.update({
+  const cancel = await prisma.booking.update({
     where: { id: bookingId },
-    data: { isConfirmed: false },
+    data: { isCancel: true },
   });
+  return cancel;
 };
 
 export const UserService = {

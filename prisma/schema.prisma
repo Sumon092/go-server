@@ -47,6 +47,7 @@ model Booking {
   id             String   @id @default(uuid())
   isConfirmed    Boolean  @default(false)
   requestBooking Boolean
+  isCancel       Boolean  @default(false)
   startDate      DateTime
   endDate        DateTime
   serviceId      String

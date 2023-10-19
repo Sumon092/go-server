@@ -35,10 +35,9 @@ const getUsers = catchAsync(async (req: Request, res: Response) => {
 });
 const addBooking = catchAsync(async (req: Request, res: Response) => {
   try {
-    const id=req?.user?.userId
-    const serviceId=req.params;
+    const id = req?.user?.userId;
     const data = req.body;
-    const result = await UserService.addBooking(id,data);
+    const result = await UserService.addBooking(id, data);
     sendResponse(res, {
       statusCode: httpStatus.OK,
       success: true,
@@ -64,19 +63,12 @@ const getBookings = catchAsync(async (req: Request, res: Response) => {
 });
 const getBookingById = catchAsync(async (req: Request, res: Response) => {
   try {
-    const id = req.query.id as string | undefined;
-
-    if (id === undefined) {
-      return res.status(httpStatus.BAD_REQUEST).json({
-        success: false,
-        message: 'User ID is required',
-      });
-    }
+    const id = req?.user?.userId;
     const result = await UserService.getBookingsByUserId(id);
     sendResponse(res, {
       statusCode: httpStatus.OK,
       success: true,
-      message: 'Booking fetched successfully',
+      message: 'users Booking fetched successfully',
       data: result,
     });
   } catch (error: any) {
@@ -85,7 +77,7 @@ const getBookingById = catchAsync(async (req: Request, res: Response) => {
 });
 const confirmBooking = catchAsync(async (req: Request, res: Response) => {
   try {
-    const id = req.query.id as string | undefined;
+    const id = req.params.id as string | undefined;
 
     if (id === undefined) {
       return res.status(httpStatus.BAD_REQUEST).json({
@@ -93,7 +85,7 @@ const confirmBooking = catchAsync(async (req: Request, res: Response) => {
         message: 'Booking ID is required',
       });
     }
-    const result = await UserService.getBookingsByUserId(id);
+    const result = await UserService.confirmBooking(id);
     sendResponse(res, {
       statusCode: httpStatus.OK,
       success: true,
@@ -106,7 +98,7 @@ const confirmBooking = catchAsync(async (req: Request, res: Response) => {
 });
 const cancelBooking = catchAsync(async (req: Request, res: Response) => {
   try {
-    const id = req.query.id as string | undefined;
+    const id = req.params.id as string | undefined;
 
     if (id === undefined) {
       return res.status(httpStatus.BAD_REQUEST).json({
@@ -114,11 +106,11 @@ const cancelBooking = catchAsync(async (req: Request, res: Response) => {
         message: 'Booking ID is required',
       });
     }
-    const result = await UserService.getBookingsByUserId(id);
+    const result = await UserService.cancelBooking(id);
     sendResponse(res, {
       statusCode: httpStatus.OK,
       success: true,
-      message: 'Booking confirmed',
+      message: 'Booking cancelled',
       data: result,
     });
   } catch (error: any) {

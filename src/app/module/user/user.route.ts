@@ -13,8 +13,20 @@ router.post(
   UserController.addBooking
 );
 router.get('/bookings', UserController.getBookings);
-router.post('/booking/:id', UserController.getBookingById);
-router.post('/confirm/:id', UserController.confirmBooking);
-router.post('/cancel/:id', UserController.cancelBooking);
+router.get(
+  '/bookings/user',
+  auth(ENUM_USER_ROLE.USER),
+  UserController.getBookingById
+);
+router.patch(
+  '/confirm/:id',
+  auth(ENUM_USER_ROLE.ADMIN, ENUM_USER_ROLE.SUPER_ADMIN),
+  UserController.confirmBooking
+);
+router.patch(
+  '/cancel/:id',
+  auth(ENUM_USER_ROLE.USER),
+  UserController.cancelBooking
+);
 
 export const UserRouter = router;
