@@ -11,17 +11,63 @@ datasource db {
 }
 
 model User {
-  id         String    @id @default(uuid())
-  name       String?
-  email      String
-  role       User_Role @default(USER)
-  password   String
-  contact_no String?
-  address    String?
-  createdAt  DateTime  @default(now())
-  updateAt   DateTime  @updatedAt
+  id             String         @id @default(uuid())
+  name           String?
+  email          String
+  role           User_Role      @default(USER)
+  password       String
+  contact_no     String?
+  address        String?
+  createdAt      DateTime       @default(now())
+  updateAt       DateTime       @updatedAt
+  bookings       Booking[]
+  review_ratings ReviewRating[]
 
   @@map("users")
+}
+
+model Service {
+  id             String         @id @default(uuid())
+  categories     String?
+  service_image  String?
+  title          String
+  city           String
+  address        String
+  type           String
+  rent           Int
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+  bookings       Booking[]
+  review_ratings ReviewRating[]
+
+  @@map("services")
+}
+
+model Booking {
+  id          String   @id @default(uuid())
+  isConfirmed Boolean  @default(false)
+  startDate   DateTime
+  endDate     DateTime
+  serviceId   String
+  services    Service  @relation(fields: [serviceId], references: [id])
+  userId      String
+  user        User     @relation(fields: [userId], references: [id])
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("bookings")
+}
+
+model ReviewRating {
+  id        String  @id @default(uuid())
+  review    String?
+  ratings   Int?
+  serviceId String
+  services  Service @relation(fields: [serviceId], references: [id])
+  userId    String
+  user      User    @relation(fields: [userId], references: [id])
+
+  @@map("review_ratings")
 }
 
 enum User_Role {

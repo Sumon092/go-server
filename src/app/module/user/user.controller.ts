@@ -26,7 +26,7 @@ const getUsers = catchAsync(async (req: Request, res: Response) => {
     sendResponse(res, {
       statusCode: httpStatus.OK,
       success: true,
-      message: 'User updated as a admin',
+      message: 'user fetched successfully',
       data: result,
     });
   } catch (error: any) {
