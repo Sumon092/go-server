@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Request, Response } from 'express';
 import httpStatus from 'http-status';
 import catchAsync from '../../../shared/catchAsync';
@@ -25,21 +26,24 @@ const register = catchAsync(async (req: Request, res: Response) => {
 });
 
 const SignIn = catchAsync(async (req: Request, res: Response) => {
+  try {
     const { email, password } = req.body;
     const result = await AuthService.SignIn(email, password);
-  
+
     sendResponse(res, {
       statusCode: httpStatus.OK,
       success: true,
       message: 'Logged in successful',
       data: result,
     });
-  
+
     return result;
-  });
-  
+  } catch (error:any) {
+    throw new Error(error.message)
+  }
+});
 
 export const AuthController = {
   register,
-  SignIn
+  SignIn,
 };

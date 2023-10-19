@@ -19,6 +19,11 @@
             "date": 1697695753103,
             "name": "C:\\PH-Next\\assignment-9\\university-management-core-service-starter\\logs\\winston\\errors\\phu-2023-19-10-12-error.log",
             "hash": "6369d1aa36cfaa05d19737c0f8224c8e90174b076a973e75cdbad6ebee07f70c"
+        },
+        {
+            "date": 1697710931889,
+            "name": "C:\\PH-Next\\assignment-9\\university-management-core-service-starter\\logs\\winston\\errors\\phu-2023-19-10-16-error.log",
+            "hash": "49be842b35cd62dfb16ac678516fe4af91ed668774372a1c35bf6324241f29fc"
         }
     ],
     "hashType": "sha256"

@@ -1,8 +1,8 @@
-// import express from 'express';
-// import { UserController } from './user.controller';
+import express from 'express';
+import { UserController } from './user.controller';
 
-// const router = express.Router();
+const router = express.Router();
 
-// router.post('/register', UserController.registerUser);
+router.patch('/make-admin/:id', UserController.makeAdmin);
 
-// export const UserRouter = router;
+export const UserRouter = router;
