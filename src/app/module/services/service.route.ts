@@ -12,6 +12,8 @@ router.patch(
   ServiceController.updateService
 );
 router.delete('/:id', ServiceController.deleteService);
+router.get('/:category', ServiceController.getServicesByCategory);
+router.get('/:city', ServiceController.getServicesByCity);
 router.get('/', ServiceController.getServices);
 router.post(
   '/add-service',

@@ -147,10 +147,40 @@ const deleteService = async (id: string): Promise<Service | null> => {
   return result;
 };
 
+const getServicesByCategory = async (category: string) => {
+  const services = await prisma.service.findMany({
+    where: {
+      categories: category,
+    },
+    include: {
+      bookings: true,
+      review_ratings: true,
+    },
+  });
+
+  return services;
+};
+
+const getServicesByCity = async (city: string) => {
+  const services = await prisma.service.findMany({
+    where: {
+      city: city,
+    },
+    include: {
+      bookings: true,
+      review_ratings: true,
+    },
+  });
+
+  return services;
+};
+
 export const ServiceService = {
   addService,
   getServices,
   getServiceById,
   updateService,
   deleteService,
+  getServicesByCategory,
+  getServicesByCity,
 };

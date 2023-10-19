@@ -71,6 +71,32 @@ const deleteService = catchAsync(async (req: Request, res: Response) => {
     data: result,
   });
 });
+const getServicesByCategory = catchAsync(
+  async (req: Request, res: Response) => {
+    const { category } = req.params;
+    console.log({ category });
+    const result = await ServiceService.getServicesByCategory(category);
+
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: 'Service category fetched successfully',
+      data: result,
+    });
+  }
+);
+const getServicesByCity = catchAsync(async (req: Request, res: Response) => {
+  const { city } = req.params;
+
+  const result = await ServiceService.getServicesByCity(city);
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Service by city fetched successfully',
+    data: result,
+  });
+});
 
 export const ServiceController = {
   addService,
@@ -78,4 +104,6 @@ export const ServiceController = {
   getServiceById,
   updateService,
   deleteService,
+  getServicesByCategory,
+  getServicesByCity,
 };
