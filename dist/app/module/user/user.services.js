@@ -28,7 +28,59 @@ const getUsers = () => __awaiter(void 0, void 0, void 0, function* () {
     const users = yield prisma_1.default.user.findMany();
     return users;
 });
+const addBooking = (id, data) => __awaiter(void 0, void 0, void 0, function* () {
+    const { requestBooking, startDate, endDate, serviceId, userId } = data;
+    const newBooking = yield prisma_1.default.booking.create({
+        data: {
+            requestBooking,
+            startDate,
+            endDate,
+            services: {
+                connect: { id: serviceId },
+            },
+            user: {
+                connect: { id: id },
+            },
+        },
+    });
+    return newBooking;
+});
+const getBookings = () => __awaiter(void 0, void 0, void 0, function* () {
+    const bookings = yield prisma_1.default.booking.findMany({
+        where: {
+            requestBooking: true,
+        },
+    });
+    return bookings;
+});
+const getBookingsByUserId = (userId) => __awaiter(void 0, void 0, void 0, function* () {
+    const bookings = yield prisma_1.default.booking.findFirst({
+        where: {
+            userId: userId,
+        },
+    });
+    return bookings;
+});
+const confirmBooking = (bookingId) => __awaiter(void 0, void 0, void 0, function* () {
+    const confirmedBooking = yield prisma_1.default.booking.update({
+        where: { id: bookingId },
+        data: { isConfirmed: true },
+    });
+    return confirmedBooking;
+});
+const cancelBooking = (bookingId) => __awaiter(void 0, void 0, void 0, function* () {
+    const cancel = yield prisma_1.default.booking.update({
+        where: { id: bookingId },
+        data: { isCancel: true },
+    });
+    return cancel;
+});
 exports.UserService = {
     makeAdmin,
     getUsers,
+    addBooking,
+    getBookings,
+    getBookingsByUserId,
+    confirmBooking,
+    cancelBooking,
 };

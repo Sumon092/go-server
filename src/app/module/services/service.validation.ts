@@ -13,13 +13,15 @@ export const createServiceSchema = z.object({
 });
 
 export const updateServiceSchema = z.object({
-  categories: z.string().optional(),
-  service_image: z.string().optional(),
-  title: z.string().optional(),
-  city: z.string().optional(),
-  address: z.string().optional(),
-  type: z.string().optional(),
-  rent: z.string().optional(),
+  body: z.object({
+    categories: z.string().optional(),
+    service_image: z.string().optional(),
+    title: z.string().optional(),
+    city: z.string().optional(),
+    address: z.string().optional(),
+    type: z.string().optional(),
+    rent: z.string().optional(),
+  }),
 });
 
 export const ServiceZodSchema = {

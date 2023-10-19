@@ -7,8 +7,16 @@ import { BookingCreateSchema } from './user.validation';
 
 const router = express.Router();
 
-router.get('/', UserController.getUsers);
-router.patch('/make-admin/:id', UserController.makeAdmin);
+router.get(
+  '/',
+  auth(ENUM_USER_ROLE.ADMIN, ENUM_USER_ROLE.SUPER_ADMIN),
+  UserController.getUsers
+);
+router.patch(
+  '/make-admin/:id',
+  auth(ENUM_USER_ROLE.SUPER_ADMIN),
+  UserController.makeAdmin
+);
 router.post(
   '/add-booking',
   validateRequest(BookingCreateSchema),
@@ -18,7 +26,7 @@ router.post(
 router.get('/bookings', UserController.getBookings);
 router.get(
   '/bookings/user',
-  auth(ENUM_USER_ROLE.USER),
+  auth(ENUM_USER_ROLE.USER, ENUM_USER_ROLE.ADMIN, ENUM_USER_ROLE.SUPER_ADMIN),
   UserController.getBookingById
 );
 router.patch(

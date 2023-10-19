@@ -5,17 +5,18 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ServiceRouter = void 0;
 const express_1 = __importDefault(require("express"));
+const user_1 = require("../../../enums/user");
+const auth_1 = __importDefault(require("../../middlewares/auth"));
 const validateRequest_1 = __importDefault(require("../../middlewares/validateRequest"));
 const service_controller_1 = require("./service.controller");
 const service_validation_1 = require("./service.validation");
 const router = express_1.default.Router();
 router.get('/:id', service_controller_1.ServiceController.getServiceById);
 router.patch('/:id', (0, validateRequest_1.default)(service_validation_1.ServiceZodSchema.updateServiceSchema), service_controller_1.ServiceController.updateService);
-router.delete('/:id', service_controller_1.ServiceController.deleteService);
+router.delete('/:id', (0, auth_1.default)(user_1.ENUM_USER_ROLE.ADMIN, user_1.ENUM_USER_ROLE.SUPER_ADMIN), service_controller_1.ServiceController.deleteService);
 router.get('/:category', service_controller_1.ServiceController.getServicesByCategory);
 router.get('/:city', service_controller_1.ServiceController.getServicesByCity);
 router.get('/', service_controller_1.ServiceController.getServices);
-router.post('/add-service', 
-//   validateRequest(ServiceZodSchema.createServiceSchema),
-service_controller_1.ServiceController.addService);
+router.post('/add-service', (0, validateRequest_1.default)(service_validation_1.ServiceZodSchema.createServiceSchema), (0, auth_1.default)(user_1.ENUM_USER_ROLE.ADMIN, user_1.ENUM_USER_ROLE.SUPER_ADMIN), service_controller_1.ServiceController.addService);
+router.patch('/update-service', (0, validateRequest_1.default)(service_validation_1.ServiceZodSchema.updateServiceSchema), (0, auth_1.default)(user_1.ENUM_USER_ROLE.ADMIN, user_1.ENUM_USER_ROLE.SUPER_ADMIN), (0, validateRequest_1.default)(service_validation_1.ServiceZodSchema.createServiceSchema), service_controller_1.ServiceController.addService);
 exports.ServiceRouter = router;
