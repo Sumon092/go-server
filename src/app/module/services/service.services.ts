@@ -110,7 +110,21 @@ const getServices = async (
   };
 };
 
+const getServiceById = async (id: string): Promise<Service | null> => {
+  const result = await prisma.service.findUnique({
+    where: {
+      id,
+    },
+    include: {
+      bookings: true,
+      review_ratings: true,
+    },
+  });
+  return result;
+};
+
 export const ServiceService = {
   addService,
   getServices,
+  getServiceById,
 };
