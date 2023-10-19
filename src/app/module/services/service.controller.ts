@@ -1,7 +1,9 @@
 import { Request, Response } from 'express';
 import httpStatus from 'http-status';
 import catchAsync from '../../../shared/catchAsync';
+import pick from '../../../shared/pick';
 import sendResponse from '../../../shared/sendResponse';
+import { serviceFilterableFields } from './service.constants';
 import { ServiceService } from './service.services';
 
 const addService = catchAsync(async (req: Request, res: Response) => {
@@ -22,24 +24,19 @@ const addService = catchAsync(async (req: Request, res: Response) => {
   }
 });
 const getServices = catchAsync(async (req: Request, res: Response) => {
-  try {
-    
-    const result = await ServiceService.getServices();
-
-    sendResponse(res, {
-      statusCode: httpStatus.OK,
-      success: true,
-      message: 'Service fetched successful',
-      data: result,
-    });
-
-    return result;
-  } catch (error: any) {
-    throw new Error(error.message);
-  }
+  console.log(req.query, 'query');
+  const filters = pick(req.query, serviceFilterableFields);
+  const options = pick(req.query, ['page', 'limit', 'sortBy', 'sortOrder']);
+  const result = await ServiceService.getServices(filters, options);
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'All services fetched successfully',
+    data: result,
+  });
 });
 
 export const ServiceController = {
   addService,
-  getServices
+  getServices,
 };

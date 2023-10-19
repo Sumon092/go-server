@@ -7,3 +7,11 @@ export type ServiceData = {
   rent: number;
   service_image?: string;
 };
+
+export type IServiceFilterRequest = {
+  searchTerm?: string | undefined;
+  minRent?: number | undefined;
+  maxRent?: number | undefined;
+  categories?: string | undefined;
+  type?: string | undefined;
+};
