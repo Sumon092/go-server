@@ -11,6 +11,7 @@ router.patch(
   validateRequest(ServiceZodSchema.updateServiceSchema),
   ServiceController.updateService
 );
+router.delete('/:id', ServiceController.deleteService);
 router.get('/', ServiceController.getServices);
 router.post(
   '/add-service',
