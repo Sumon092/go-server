@@ -5,6 +5,7 @@ import globalErrorHandler from './app/middlewares/globalErrorHandler';
 import routes from './app/routes';
 
 import cookieParser from 'cookie-parser';
+import config from './config';
 
 const app: Application = express();
 
@@ -21,6 +22,10 @@ app.use('/api/v1', routes);
 //global error handler
 app.use(globalErrorHandler);
 
+
+app.get('/', (req: Request, res: Response) => {
+  res.send(`Go booking app listening on port ${config.port}`);
+});
 //handle not found
 app.use((req: Request, res: Response, next: NextFunction) => {
   res.status(httpStatus.NOT_FOUND).json({
