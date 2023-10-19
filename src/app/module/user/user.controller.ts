@@ -33,8 +33,105 @@ const getUsers = catchAsync(async (req: Request, res: Response) => {
     throw new Error(error.message);
   }
 });
+const addBooking = catchAsync(async (req: Request, res: Response) => {
+  try {
+    const id=req?.user?.userId
+    const serviceId=req.params;
+    const data = req.body;
+    const result = await UserService.addBooking(id,data);
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: 'Booking added successfully',
+      data: result,
+    });
+  } catch (error: any) {
+    throw new Error(error.message);
+  }
+});
+const getBookings = catchAsync(async (req: Request, res: Response) => {
+  try {
+    const result = await UserService.getBookings();
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: 'Booking fetched successfully',
+      data: result,
+    });
+  } catch (error: any) {
+    throw new Error(error.message);
+  }
+});
+const getBookingById = catchAsync(async (req: Request, res: Response) => {
+  try {
+    const id = req.query.id as string | undefined;
+
+    if (id === undefined) {
+      return res.status(httpStatus.BAD_REQUEST).json({
+        success: false,
+        message: 'User ID is required',
+      });
+    }
+    const result = await UserService.getBookingsByUserId(id);
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: 'Booking fetched successfully',
+      data: result,
+    });
+  } catch (error: any) {
+    throw new Error(error.message);
+  }
+});
+const confirmBooking = catchAsync(async (req: Request, res: Response) => {
+  try {
+    const id = req.query.id as string | undefined;
+
+    if (id === undefined) {
+      return res.status(httpStatus.BAD_REQUEST).json({
+        success: false,
+        message: 'Booking ID is required',
+      });
+    }
+    const result = await UserService.getBookingsByUserId(id);
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: 'Booking confirmed',
+      data: result,
+    });
+  } catch (error: any) {
+    throw new Error(error.message);
+  }
+});
+const cancelBooking = catchAsync(async (req: Request, res: Response) => {
+  try {
+    const id = req.query.id as string | undefined;
+
+    if (id === undefined) {
+      return res.status(httpStatus.BAD_REQUEST).json({
+        success: false,
+        message: 'Booking ID is required',
+      });
+    }
+    const result = await UserService.getBookingsByUserId(id);
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: 'Booking confirmed',
+      data: result,
+    });
+  } catch (error: any) {
+    throw new Error(error.message);
+  }
+});
 
 export const UserController = {
   makeAdmin,
   getUsers,
+  addBooking,
+  getBookings,
+  getBookingById,
+  confirmBooking,
+  cancelBooking,
 };
