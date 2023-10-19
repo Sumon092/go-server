@@ -1,13 +1,15 @@
 import { z } from 'zod';
 
 export const createServiceSchema = z.object({
-  categories: z.string().optional(),
-  service_image: z.string().optional(),
-  title: z.string(),
-  city: z.string(),
-  address: z.string(),
-  type: z.string(),
-  rent: z.number(),
+  body: z.object({
+    categories: z.string().optional(),
+    service_image: z.string().optional(),
+    title: z.string(),
+    city: z.string(),
+    address: z.string(),
+    type: z.string(),
+    rent: z.number(),
+  }),
 });
 
 export const updateServiceSchema = z.object({

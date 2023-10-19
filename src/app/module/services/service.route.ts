@@ -17,7 +17,7 @@ router.get('/:city', ServiceController.getServicesByCity);
 router.get('/', ServiceController.getServices);
 router.post(
   '/add-service',
-  //   validateRequest(ServiceZodSchema.createServiceSchema),
+  validateRequest(ServiceZodSchema.createServiceSchema),
   ServiceController.addService
 );
 
