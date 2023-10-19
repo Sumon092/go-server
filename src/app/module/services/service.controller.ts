@@ -48,8 +48,22 @@ const getServiceById = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+const updateService = catchAsync(async (req: Request, res: Response) => {
+    const { id } = req.params;
+    const payload = req.body;
+    const result = await ServiceService.updateService(id, payload);
+  
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: 'Services updated successfully',
+      data: result,
+    });
+  });
+
 export const ServiceController = {
   addService,
   getServices,
-  getServiceById
+  getServiceById,
+  updateService
 };

@@ -1,9 +1,16 @@
 import express from 'express';
+import validateRequest from '../../middlewares/validateRequest';
 import { ServiceController } from './service.controller';
+import { ServiceZodSchema } from './service.validation';
 
 const router = express.Router();
 
 router.get('/:id', ServiceController.getServiceById);
+router.patch(
+  '/:id',
+  validateRequest(ServiceZodSchema.updateServiceSchema),
+  ServiceController.updateService
+);
 router.get('/', ServiceController.getServices);
 router.post(
   '/add-service',
