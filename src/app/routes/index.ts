@@ -1,5 +1,6 @@
 import express from 'express';
 import { AuthRouter } from '../module/auth/auth.route';
+import { ReviewsRouter } from '../module/reviewRating/review.route';
 import { ServiceRouter } from '../module/services/service.route';
 import { UserRouter } from '../module/user/user.route';
 
@@ -18,6 +19,10 @@ const moduleRoutes = [
   {
     path: '/service',
     routes: ServiceRouter,
+  },
+  {
+    path: '/review',
+    routes: ReviewsRouter,
   },
 ];
 
