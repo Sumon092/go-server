@@ -11,6 +11,12 @@ const makeAdmin = async (id: string) => {
   return admin;
 };
 
+const getUsers = async () => {
+  const users = await prisma.user.findMany();
+  return users;
+};
+
 export const UserService = {
   makeAdmin,
+  getUsers,
 };
